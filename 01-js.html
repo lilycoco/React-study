@@ -1,32 +1,29 @@
 <div id="root"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.0.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.0.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.js"></script>
+<script src="https://unpkg.com/react@16.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
 <script type="text/babel">
-  const rootElement = document.getElementById('root')
-  // const element = document.createElement('div')
-  // element.textContent ='Hello World'
-  // element.className = 'container'
-  // rootElement.appendChild(element)
-  
-  // const element = React.createElement('div',{
-  //   className: 'container',
-  //   children: ['Hello World','Goodbye World']
-  // })
 
-  // const content = 'Hello World'
-  // const myClassName = 'container'
-  // const props = {
-  //   className: 'container',
-  //   children: 'Hello World',
-  // }
-  // const element = (<div { ...props }  className="my_class"/>)
-  const Message = props => <div>{ props.msg }</div>
-  const element = (
-    <div className="container">
-      <Message msg= "Hello World" />
-      <Message msg= "Hello World" />
-    </div>
+  const rootElement = document.getElementById('root')
+
+  class SayHello extends React.Component {
+    static propTypes = {
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+    }
+    render() {
+      const {firstName, lastName} = this.props
+      return(
+        <div>
+        Hello {firstName}{lastName}!
+      </div>
+      )
+    }
+  }
+  
+  ReactDOM.render(
+    <SayHello firstName={true} />,
+    rootElement
   )
-  ReactDOM.render(element, rootElement)
 </script>
