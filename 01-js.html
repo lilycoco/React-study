@@ -16,11 +16,17 @@
 
   // const content = 'Hello World'
   // const myClassName = 'container'
-  const props = {
-    className: 'container',
-    children: 'Hello World',
-  }
-  const element = (<div { ...props }  className="my_class"/>)
-
+  // const props = {
+  //   className: 'container',
+  //   children: 'Hello World',
+  // }
+  // const element = (<div { ...props }  className="my_class"/>)
+  const Message = props => <div>{ props.msg }</div>
+  const element = (
+    <div className="container">
+      <Message msg= "Hello World" />
+      <Message msg= "Hello World" />
+    </div>
+  )
   ReactDOM.render(element, rootElement)
 </script>
