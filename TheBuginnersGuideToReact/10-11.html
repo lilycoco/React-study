@@ -25,7 +25,10 @@
             } else {
               const startTime = Date.now() - this.state.lapse
               this.timer = setInterval(() => {
-                this.setState({lapse: Date.now() - startTime,})
+                this.setState({lapse: Date.now() - startTime,
+                }, () => {
+                  console.log(this.state.lapse)
+                })
               })
             }
             return {running: !state.running}
@@ -36,7 +39,11 @@
           clearInterval(this.timer)
           this.setState({lapse: 0, running: false})
         }
-        
+
+        componentWillUnmount() {
+          clearInterval(this.timer)
+        }
+
         render() {
           const {lapse, running} = this.state
           const buttonStyles = {
