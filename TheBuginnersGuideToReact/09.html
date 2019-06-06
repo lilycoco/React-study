@@ -20,16 +20,10 @@
       function App() {
         return (
           <div>
-            <p>
-              There have been {state.eventCount} events.
-            </p>
-            <p>
-              <button onClick={increment}>Click Me</button>
-            </p>
+            <p>There have been {state.eventCount} events.</p>
+            <p><button onClick={increment}>Click Me</button></p>
             <p>You typed: {state.userName}</p>
-            <p>
-              <input onChange={updateUsername} />
-            </p>
+            <p><input onChange={updateUsername} /></p>
           </div>
         )
       }
