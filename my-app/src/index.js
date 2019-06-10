@@ -4,7 +4,10 @@ import './index.css';
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button 
+      className="square" 
+      onClick={props.onClick}
+    >
       {props.value}
     </button>
   );
@@ -14,8 +17,8 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
     <Square 
-    value={this.props.squares[i]}
-    onClick={() => this.props.onClick(i)}
+      value={this.props.squares[i]}
+      onClick={() => this.props.onClick(i)}
     />
     );
   }
@@ -50,6 +53,7 @@ class Game extends React.Component {
     }],
     stepNumber: 0,
     xIsNext: true,
+    asc: true,
   }
 
   handleClick(i) {
@@ -64,7 +68,7 @@ class Game extends React.Component {
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
       history: history.concat([{
-        squares:squares,
+        squares: squares,
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -78,11 +82,28 @@ class Game extends React.Component {
     });
   }
 
+  sortOrder() {
+    this.setState({
+      asc: !this.state.asc,
+    })
+  }
+
+  sort() {
+    return(
+    <button onClick={() => this.sortOrder()}>
+      Sort order
+    </button>
+    )
+  }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const moves = history.map((step, move) => {
+      if(!this.state.asc) {
+        move = history.length - move -1;
+      }
       const bold = (this.state.stepNumber === move) 
       ? 'bold' : 'unbold';
       const desc = move 
@@ -117,6 +138,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <div>{this.sort()}</div>
           <ol>{moves}</ol>
         </div>
       </div>
