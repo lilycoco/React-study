@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/React-study/my-app/static/css/main.72013285.chunk.css",
-    "main.js": "/React-study/my-app/static/js/main.debc56f1.chunk.js",
-    "main.js.map": "/React-study/my-app/static/js/main.debc56f1.chunk.js.map",
-    "runtime~main.js": "/React-study/my-app/static/js/runtime~main.59ed84cc.js",
-    "runtime~main.js.map": "/React-study/my-app/static/js/runtime~main.59ed84cc.js.map",
-    "static/js/2.0e3f6a1a.chunk.js": "/React-study/my-app/static/js/2.0e3f6a1a.chunk.js",
-    "static/js/2.0e3f6a1a.chunk.js.map": "/React-study/my-app/static/js/2.0e3f6a1a.chunk.js.map",
-    "index.html": "/React-study/my-app/index.html",
-    "precache-manifest.30c91a56d3e07c97f3a9f0c38d4882b9.js": "/React-study/my-app/precache-manifest.30c91a56d3e07c97f3a9f0c38d4882b9.js",
-    "service-worker.js": "/React-study/my-app/service-worker.js",
-    "static/css/main.72013285.chunk.css.map": "/React-study/my-app/static/css/main.72013285.chunk.css.map"
+    "main.css": "/React-study/static/css/main.72013285.chunk.css",
+    "main.js": "/React-study/static/js/main.debc56f1.chunk.js",
+    "main.js.map": "/React-study/static/js/main.debc56f1.chunk.js.map",
+    "runtime~main.js": "/React-study/static/js/runtime~main.456ce910.js",
+    "runtime~main.js.map": "/React-study/static/js/runtime~main.456ce910.js.map",
+    "static/js/2.0e3f6a1a.chunk.js": "/React-study/static/js/2.0e3f6a1a.chunk.js",
+    "static/js/2.0e3f6a1a.chunk.js.map": "/React-study/static/js/2.0e3f6a1a.chunk.js.map",
+    "index.html": "/React-study/index.html",
+    "precache-manifest.98f0729492f43a650507250e5a6bb91f.js": "/React-study/precache-manifest.98f0729492f43a650507250e5a6bb91f.js",
+    "service-worker.js": "/React-study/service-worker.js",
+    "static/css/main.72013285.chunk.css.map": "/React-study/static/css/main.72013285.chunk.css.map"
   }
 }
