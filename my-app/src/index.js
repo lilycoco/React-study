@@ -97,8 +97,6 @@ class Game extends React.Component {
     )
   }
 
-
-
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -137,7 +135,9 @@ class Game extends React.Component {
     if (winner) {
       status = 'Winner: ' + winner[0];      
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = this.state.stepNumber < 9
+      ? 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
+      : "Draw";
     } 
 
     return (
