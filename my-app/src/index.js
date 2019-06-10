@@ -44,17 +44,16 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
-  state = { 
+  state = {
     history: [{
       squares: Array(9).fill(null)
     }],
-      stepNumber: 0,
-      xIsNext: true,
+    stepNumber: 0,
+    xIsNext: true,
   }
 
   handleClick(i) {
-    const history = this.state.history.slice(0,
-      this.state.stepNumber + 1);
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1]; 
     const squares = current.squares.slice();
 
@@ -84,12 +83,17 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const moves = history.map((step, move) => {
+      const bold = (this.state.stepNumber === move) 
+      ? 'bold' : 'unbold';
       const desc = move 
       ? 'Go to move #' + move 
       : 'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>
+          <button 
+            className={bold} 
+            onClick={() => this.jumpTo(move)}
+          >
             {desc}
           </button>
         </li>
