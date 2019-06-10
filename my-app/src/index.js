@@ -124,8 +124,8 @@ class Game extends React.Component {
 
     function win(i) {
       if(winner) {
-        const line = winner[1];
-        if(i === line[0] || i === line[1] ||i === line[2] ){
+        const [a, b, c] = winner.number;
+        if(i === a || i === b ||i === c){
           return "highlight";
         }
       }
@@ -133,7 +133,7 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = 'Winner: ' + winner[0];      
+      status = 'Winner: ' + winner.mark;      
     } else {
       status = this.state.stepNumber < 9
       ? 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
@@ -170,15 +170,16 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return [squares[a], lines[i]];
+  let line = null;
+  lines.forEach(i => {
+    let [a, b, c] = i;
+   [a, b, c] = [squares[a], squares[b], squares[c]];
+    if (a && a === b && a === c) {
+      line = {mark: a, number: i};
     }
-  }
-  return null;
+  })
+  return line;
 }
-
 
 // ========================================
 
