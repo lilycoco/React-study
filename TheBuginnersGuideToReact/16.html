@@ -27,8 +27,8 @@
         ]
 
         state = {
-          multiline: '',
           commaSeparated: '',
+          multiline: '',
           multiSelect: [],
         }
         
@@ -54,8 +54,8 @@
             .map(v => v.trim())
             .filter(Boolean)
           this.setState({
-            multiline: value,
             commaSeparated: allVals.join(','),
+            multiline: value,
             multiSelect: allVals.filter(v =>
               MyFancyForm.availableOptions.includes(v),
             ),
@@ -67,9 +67,9 @@
             event.target.selectedOptions,
           ).map(o => o.value)
           this.setState({
-            multiSelect: allVals,
-            multiline: allVals.join('\n'),
             commaSeparated: allVals.join(','),
+            multiline: allVals.join('\n'),
+            multiSelect: allVals,
           })
         }
         
@@ -130,6 +130,7 @@
         <MyFancyForm />,
         document.getElementById('root'),
       )
+
     </script>
   </body>
 </html>

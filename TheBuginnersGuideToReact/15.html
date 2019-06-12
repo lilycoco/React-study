@@ -51,11 +51,11 @@
                   name="username"
                 />
               </label>
-              {error ? (
+              {error && (
                 <div style={{color: 'red'}}>
                   {error}
                 </div>
-              ) : null}
+              )}
               <button
                 disabled={Boolean(error)}
                 type="submit"
