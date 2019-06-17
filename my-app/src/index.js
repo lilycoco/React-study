@@ -1,162 +1,147 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square(props) {
+  const {className, onClick, value} = props;
   return (
     <button 
-      className={"square " + props.className}
-      onClick={props.onClick}
+      className={"square " + className}
+      onClick={onClick}
     >
-      {props.value}
+      {value}
     </button>
   );
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
+function Board(props) {
+  const renderSquare = (i => {
+    const {squares, onClick, highlight} = props;
     return (
     <Square 
-      value={this.props.squares[i]}
-      onClick={() => this.props.onClick(i)}
-      className={this.props.highlight(i)}
+      value={squares[i]}
+      onClick={() => onClick(i)}
+      className={highlight(i)}
     />
     );
-  }
+  })
 
-  render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+  return (
+    <div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
-    );
-  }
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
+    </div>
+  );
 }
 
-class Game extends React.Component {
-  state = {
-    history: [{
-      squares: Array(9).fill(null)
-    }],
-    stepNumber: 0,
-    xIsNext: true,
-    asc: true,
-  }
+function Game() {
+  const [historys, setHistory] = useState([{
+    squares: Array(9).fill(null)
+  }]);
+  const [stepNumber, setStepNumber] = useState(0);
+  const [xIsNext, setXIsNext] = useState(true);
+  const [asc, setAsc] = useState(true);
 
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+  const handleClick = (i => {
+    const history = historys.slice(0, stepNumber + 1);
     const current = history[history.length - 1]; 
     const squares = current.squares.slice();
 
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+    squares[i] = xIsNext ? 'X' : 'O';
+    setHistory(history.concat([{squares: squares,}]));
+    setStepNumber(history.length);
+    setXIsNext(!xIsNext);
+  });
 
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
+  const jumpTo = (step => {
+    setStepNumber(step);
+    setXIsNext((step % 2) === 0);
+  });
 
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
-  }
+  const sortOrder = (() => {
+    setAsc(!asc);
+  });
 
-  sortOrder() {
-    this.setState({
-      asc: !this.state.asc,
-    })
-  }
-
-  sort() {
+  const sort = (() => {
     return(
-    <button onClick={() => this.sortOrder()}>
+    <button onClick={() => sortOrder()}>
       Sort order
     </button>
     )
-  }
+  });
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-    const moves = history.map((step, move) => {
-      if(!this.state.asc) {
-        move = history.length - move - 1;
-      }
-      const bold = (this.state.stepNumber === move) 
-      ? 'bold' : 'unbold';
-      const desc = move 
-      ? 'Go to move #' + move 
-      : 'Go to game start';
-      return (
-        <li key={move}>
-          <button 
-            className={bold} 
-            onClick={() => this.jumpTo(move)}
-          >
-            {desc}
-          </button>
-        </li>
-      );
-    });
+  const current = historys[stepNumber];
+  const winner = calculateWinner(current.squares);
+  const moves = historys.map((step, move) => {
+    if(!asc) {
+      move = historys.length - move - 1;
+    }
+    const bold = (stepNumber === move) ? 'bold' : 'unbold';
+    const desc = move 
+    ? 'Go to move #' + move 
+    : 'Go to game start';
+    return (
+      <li key={move}>
+        <button 
+          className={bold} 
+          onClick={() => jumpTo(move)}
+        >
+          {desc}
+        </button>
+      </li>
+    );
+  });
 
-    function win(i) {
-      if(winner) {
-        const [a, b, c] = winner.number;
-        if(i === a || i === b ||i === c){
-          return "highlight";
-        }
+  function win(i) {
+    if(winner) {
+      const [a, b, c] = winner.number;
+      if(i === a || i === b ||i === c) {
+        return "highlight";
       }
     }
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner.mark;      
-    } else {
-      status = this.state.stepNumber < 9
-      ? 'Next player: ' + (this.state.xIsNext ? 'X' : 'O')
-      : "Draw";
-    } 
-
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-            highlight={(i) => win(i)}
-          />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <div>{this.sort()}</div>
-          <ol>{moves}</ol>
-        </div>
-      </div>
-    );
   }
+
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner.mark;      
+  } else {
+    status = stepNumber < 9
+    ? 'Next player: ' + (xIsNext ? 'X' : 'O')
+    : "Draw";
+  } 
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={current.squares}
+          onClick={(i) => handleClick(i)}
+          highlight={(i) => win(i)}
+        />
+      </div>
+      <div className="game-info">
+        <div>{status}</div>
+        <div>{sort()}</div>
+        <ol>{moves}</ol>
+      </div>
+    </div>
+  );
 }
 
 function calculateWinner(squares) {
@@ -175,7 +160,7 @@ function calculateWinner(squares) {
     let [a, b, c] = i;
    [a, b, c] = [squares[a], squares[b], squares[c]];
     if (a && a === b && a === c) {
-      line = {mark: a, number: i};
+      line = { mark: a, number: i };
     }
   })
   return line;
