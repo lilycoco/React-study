@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
@@ -85,6 +85,10 @@ function Game() {
     </button>
     )
   });
+
+  useEffect(() => {
+    document.title = `You clicked ${stepNumber} times`;
+  }, [stepNumber]);
 
   const current = historys[stepNumber];
   const winner = calculateWinner(current.squares);
